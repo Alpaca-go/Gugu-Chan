@@ -7,6 +7,7 @@ import com.guguchan.app.data.model.OrderModel
 import com.guguchan.app.data.model.TemplateModel
 import com.guguchan.app.render.BitmapExporter
 import com.guguchan.app.render.TemplateRenderer
+import com.guguchan.app.utils.FileUtils
 
 class GenerateImageUseCase(
     private val templateRenderer: TemplateRenderer,
@@ -20,10 +21,15 @@ class GenerateImageUseCase(
     ): GenerateResult {
         return try {
             val previewFile = templateRenderer.renderToCache(context, template, order)
+            val localFile = FileUtils.persistGeneratedImage(
+                context = context,
+                sourceFile = previewFile,
+                fileName = "${order.orderId}_${template.templateId}.png"
+            )
             val exportedPath = if (saveToGallery) {
                 bitmapExporter.export(
                     context = context,
-                    imagePath = previewFile.absolutePath,
+                    imagePath = localFile.absolutePath,
                     fileName = "${order.orderId}_${UUID.randomUUID()}_${template.templateId}.png"
                 )
             } else {
@@ -32,7 +38,8 @@ class GenerateImageUseCase(
 
             GenerateResult(
                 success = true,
-                imagePath = exportedPath ?: previewFile.absolutePath,
+                localPath = localFile.absolutePath,
+                imagePath = exportedPath ?: localFile.absolutePath,
                 previewPath = previewFile.absolutePath
             )
         } catch (error: Throwable) {

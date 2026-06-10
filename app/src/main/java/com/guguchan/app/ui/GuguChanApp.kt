@@ -195,6 +195,9 @@ private fun ManualGenerateSection(
             state.latestSavedPath?.let {
                 Text("最近输出: $it", style = MaterialTheme.typography.bodySmall)
             }
+            state.latestLocalPath?.let {
+                Text("本地文件: $it", style = MaterialTheme.typography.bodySmall)
+            }
         }
     }
 }

@@ -31,6 +31,7 @@ data class GuguChanUiState(
     val orders: List<OrderModel> = emptyList(),
     val records: List<GenerateRecordModel> = emptyList(),
     val previewPath: String? = null,
+    val latestLocalPath: String? = null,
     val latestSavedPath: String? = null,
     val message: String? = null,
     val isGenerating: Boolean = false
@@ -141,8 +142,13 @@ class GuguChanViewModel(
             mutableState.value = state.copy(
                 isGenerating = false,
                 previewPath = result.previewPath,
+                latestLocalPath = result.localPath,
                 latestSavedPath = result.imagePath,
-                message = result.errorMessage ?: "图片已生成"
+                message = result.errorMessage ?: if (saveToGallery) {
+                    "图片已生成，本地与相册均已保存"
+                } else {
+                    "预览已生成，并已保存到应用本地目录"
+                }
             )
         }
     }
@@ -163,6 +169,7 @@ class GuguChanViewModel(
             records.forEach { dependencies.generateRecordRepository.saveRecord(it) }
             mutableState.value = state.copy(
                 isGenerating = false,
+                latestLocalPath = records.lastOrNull()?.imagePath,
                 latestSavedPath = records.lastOrNull()?.imagePath,
                 message = "批量生成完成，共 ${records.size} 条"
             )
