@@ -109,9 +109,9 @@ fun GuguChanApp(viewModel: GuguChanViewModel) {
                     onBatchGenerate = viewModel::batchGenerateSelectedOrders
                 )
             }
-            if (state.previewPath != null) {
+            state.previewPath?.let { previewPath ->
                 item {
-                    PreviewSection(state.previewPath)
+                    PreviewSection(previewPath)
                 }
             }
             item {
