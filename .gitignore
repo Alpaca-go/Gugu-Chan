@@ -1,0 +1,17 @@
+# Android / Gradle
+.gradle/
+build/
+**/build/
+local.properties
+.idea/
+captures/
+.tmp_gradle/
+
+# OS
+Thumbs.db
+Desktop.ini
+
+# Generated media
+app/generated/
+*.apk
+*.aab

@@ -1,0 +1,27 @@
+{
+  "templateId": "card_001",
+  "templateName": "购物感谢卡 01",
+  "templateType": "gift_card",
+  "backgroundImage": "card_001.png",
+  "canvasWidth": 1080,
+  "canvasHeight": 1600,
+  "exportFormat": "png",
+  "textFields": [
+    {
+      "fieldId": "consumer_id",
+      "fieldName": "消费者ID",
+      "x": 240,
+      "y": 760,
+      "width": 600,
+      "height": 100,
+      "fontSize": 42,
+      "minFontSize": 24,
+      "fontColor": "#2A1E16",
+      "fontWeight": "bold",
+      "align": "center",
+      "maxLength": 24,
+      "autoResize": true,
+      "singleLine": true
+    }
+  ]
+}
